@@ -1,6 +1,6 @@
-import { useState, memo } from "react";
+import { useState, memo, useCallback } from "react";
 
-import { Post } from "../../components";
+import { Post, SendPost } from "../../components";
 import { PostType } from "../../utilities/types";
 import { StyledPosts, StyledContainer } from "./styles";
 import { DefaultAvatar, Heart } from "../../images"; 
@@ -31,8 +31,13 @@ const initialPosts: PostType[] = [
 function PostsComponent(): React.ReactElement {
     const [posts, setPosts] = useState<PostType[]>(initialPosts);
 
+    const handleSendNewPost = useCallback((newPost: PostType) => {
+        setPosts([newPost, ...posts])
+    }, [posts]);
+
     return (
         <StyledContainer>
+            <SendPost onSendNewPost={handleSendNewPost} />
             <StyledPosts>
                 {posts.map((post) => (
                     <Post

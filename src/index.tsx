@@ -1,4 +1,15 @@
 import { render } from 'react-dom';
-import App from './App';
+import { Global } from "@emotion/react";
 
-render(<App />, document.getElementById('root'));
+import App from './App';
+import { globalStyles } from "./styles";
+import "./bootstrap.min.css";
+
+
+render(
+    <>
+        <Global styles={globalStyles} />
+        <App />
+    </>,
+    document.getElementById('root')
+);

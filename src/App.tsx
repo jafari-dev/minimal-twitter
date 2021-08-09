@@ -1,5 +1,14 @@
+import { Container } from "react-bootstrap";
+
+import { Posts } from "./layouts";
+
+
 function App() {
-  return (<div>Twitter</div>);
+	return (
+		<Container>
+			<Posts />
+		</Container>
+	);
 }
 
 export default App;

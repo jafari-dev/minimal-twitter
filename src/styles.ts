@@ -1,5 +1,7 @@
 import { css } from "@emotion/react"
 
+import "./fonts/index.css";
+
 
 export const globalStyles = css`
     html {
@@ -11,6 +13,7 @@ export const globalStyles = css`
     *, h1, h2, h3, h4, h5, h6 {
         padding: 0;
         margin: 0;
+        font-family: Roboto;
     }
 
     a {

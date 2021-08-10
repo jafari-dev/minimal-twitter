@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
 
-import { Header, Posts, Footer } from "./layouts";
+import { Header, Posts, Register, Footer } from "./layouts";
 
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
 		<Container>
 			<Header />
 			<Switch>
+				<Route path="/register" exact component={Register} />
 				<Route path="/" exact component={Posts} />
 			</Switch>
 			<Footer />

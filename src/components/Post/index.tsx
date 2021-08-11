@@ -8,7 +8,7 @@ import {
     StyledBody,
     StyledPost,
     StyledFullname,
-    StyledUsername,
+    StyledId,
     StyledDateAndTime,
     StyledNameAndId,
     StyledHeaderDetails,
@@ -35,7 +35,7 @@ function PostComponent({
                 <StyledHeaderDetails>
                     <StyledNameAndId>
                         <StyledFullname>{ownerFullname}</StyledFullname>
-                        <StyledUsername>@{ownerId}</StyledUsername>
+                        <StyledId>@{ownerId}</StyledId>
                     </StyledNameAndId>
                     <hr />
                     <StyledDateAndTime>

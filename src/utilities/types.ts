@@ -8,3 +8,12 @@ export interface PostType {
     ownerId: string;
     ownerFullname: string;
 }
+
+export interface UserType {
+    id: string;
+    firstName: string;
+    lastName: string;
+    joinDate: string;
+    posts: number;
+    avatar: string;
+}

@@ -47,7 +47,7 @@ export const StyledFullname = styled.h6`
     margin-right: 32px;
 `;
 
-export const StyledUsername = styled(Card.Link)`
+export const StyledId = styled(Card.Link)`
     cursor: pointer;
     font-size: 16px;
 `;

@@ -2,7 +2,7 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { FourZeroFour } from "../../assets/images";
+import { FourZeroFour } from "@/images";
 import { StyledNotFound } from "./styles";
 
 

@@ -1,7 +1,7 @@
 import { css } from "@emotion/react"
 
-import "./assets/css/bootstrap.min.css";
-import "./assets/css/font-face.css"
+import "@/css/bootstrap.min.css";
+import "@/css/font-face.css"
 
 
 export const globalStyles = css`

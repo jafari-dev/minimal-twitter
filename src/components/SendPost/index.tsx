@@ -2,8 +2,8 @@ import { Button, FormControl } from "react-bootstrap";
 import { useRef, useCallback } from "react";
 
 import { StyledSendTweet } from "./styles";
-import { PostType } from "../../lib/types";
-import { DefaultAvatar } from "../../assets/images";
+import { PostType } from "_/types";
+import { DefaultAvatar } from "@/images";
 
 
 interface Props {

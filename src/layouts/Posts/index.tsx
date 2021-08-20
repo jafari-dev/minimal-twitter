@@ -1,9 +1,9 @@
 import { useState, memo, useCallback, useEffect } from "react";
 
-import { Post, SendPost, Pagination } from "../../components";
-import { PostType } from "../../lib/types";
+import { Post, SendPost, Pagination } from "#";
+import { PostType } from "_/types";
 import { StyledPosts, StyledContainer } from "./styles";
-import { getPostsByPage, getNumberOfPosts } from "../../lib/backend";
+import { getPostsByPage, getNumberOfPosts } from "_/backend";
 
 
 function PostsComponent(): React.ReactElement {

@@ -3,26 +3,24 @@ import { useState, memo, useCallback, useEffect } from "react";
 import { Post, SendPost, Pagination } from "../../components";
 import { PostType } from "../../utilities/types";
 import { StyledPosts, StyledContainer } from "./styles";
-import { fetchPosts, getPagesOfPosts } from "../../utilities/backend";
-
-
-let MAX_PAGES: number;
-
-(async () => {
-    MAX_PAGES = await getPagesOfPosts();
-})();
+import { getPostsByPage, getNumberOfPosts } from "../../utilities/backend/";
 
 
 function PostsComponent(): React.ReactElement {
     const [posts, setPosts] = useState<PostType[]>([]);
-
-    useEffect(() => {
-        handleGetPostsByPage(1);
-    }, []);
+    const [numberOfPostsPagination, setNumberOfPostsPagination] = useState(0);
 
     const handleGetPostsByPage = useCallback(async (pageNumber: number) => {
-        const fetchedPosts = await fetchPosts(pageNumber);
+        const fetchedPosts = await getPostsByPage(pageNumber);
         setPosts(fetchedPosts);
+    }, []);
+
+    useEffect(() => {
+        (async function() {
+            const numberOfPosts = await getNumberOfPosts();
+            setNumberOfPostsPagination(numberOfPosts / 10);
+            handleGetPostsByPage(1);
+        })();
     }, []);
 
     const handleSendNewPost = useCallback((newPost: PostType) => {
@@ -47,7 +45,7 @@ function PostsComponent(): React.ReactElement {
                     />
                 ))}
             </StyledPosts>
-            <Pagination maxPages={MAX_PAGES} onChangeActivePage={handleGetPostsByPage} />
+            <Pagination maxPages={numberOfPostsPagination} onChangeActivePage={handleGetPostsByPage} />
         </StyledContainer>
     )
 }

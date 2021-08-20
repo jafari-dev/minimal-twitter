@@ -27,7 +27,6 @@ function PostComponent({
     ownerFullname,
     ownerId,
 }: PostType): React.ReactElement {
-    console.log(text);
     return (
         <StyledPost>
             <StyledHeader>

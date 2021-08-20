@@ -3,27 +3,25 @@ import { useState, memo, useCallback, useEffect } from "react";
 import { User, Pagination } from "../../components";
 import { UserType } from "../../utilities/types";
 import { StyledUsers, StyledContainer } from "./styles";
-import { fetchUsers, getPagesOfUsers } from "../../utilities/backend";
-
-
-let MAX_PAGES: number;
-
-(async () => {
-    MAX_PAGES = await getPagesOfUsers();
-})();
+import { getUsersByPage, getNumberOfUsers } from "../../utilities/backend";
 
 
 function PostsComponent(): React.ReactElement {
     const [users, setUsers] = useState<UserType[]>([]);
+    const [numberOfUsersPagination, setNumberOfUsersPagination] = useState(0);
 
     const handleGetUsersByPage = useCallback(async (pageNumber: number) => {
-        const fetchedUsers = await fetchUsers(pageNumber);
+        const fetchedUsers = await getUsersByPage(pageNumber);
         setUsers(fetchedUsers);
     }, []);
 
     useEffect(() => {
-        handleGetUsersByPage(1);
-    }, [handleGetUsersByPage]);
+        (async function() {
+            const numberOfUsers = await getNumberOfUsers();
+            setNumberOfUsersPagination(numberOfUsers / 20);
+            handleGetUsersByPage(1);
+        })();
+    }, []);
 
 
     return (
@@ -41,7 +39,7 @@ function PostsComponent(): React.ReactElement {
                     />
                 ))}
             </StyledUsers>
-            <Pagination maxPages={MAX_PAGES} onChangeActivePage={handleGetUsersByPage} />
+            <Pagination maxPages={numberOfUsersPagination} onChangeActivePage={handleGetUsersByPage} />
         </StyledContainer>
     )
 }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { StyledHeader } from "./styles";
-import { Twitter } from "../../images";
+import { Twitter } from "../../assets/images";
 
 
 function HeaderComponent(): React.ReactElement {

@@ -1,9 +1,9 @@
 import { useState, memo, useCallback, useEffect } from "react";
 
 import { User, Pagination } from "../../components";
-import { UserType } from "../../utilities/types";
+import { UserType } from "../../lib/types";
 import { StyledUsers, StyledContainer } from "./styles";
-import { getUsersByPage, getNumberOfUsers } from "../../utilities/backend";
+import { getUsersByPage, getNumberOfUsers } from "../../lib/backend";
 
 
 function PostsComponent(): React.ReactElement {

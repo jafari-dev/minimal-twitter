@@ -1,8 +1,8 @@
 import { memo } from "react";
 import { Card, Button } from "react-bootstrap";
 
-import { PostType } from "../../utilities/types";
-import { Heart } from "../../images";
+import { PostType } from "../../lib/types";
+import { Heart } from "../../assets/images";
 import {
     StyledAvatar,
     StyledBody,

@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { UserType } from "../../utilities/types";
+import { UserType } from "../../lib/types";
 import {
     StyledAvatar,
     StyledUser,

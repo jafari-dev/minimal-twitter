@@ -4,7 +4,6 @@ import { Global } from "@emotion/react";
 
 import App from './App';
 import { globalStyles } from "./styles";
-import "./bootstrap.min.css";
 
 
 render(

@@ -1,6 +1,10 @@
+import { DefaultAvatar } from "@/images";
+import { addUser } from "_/backend";
+import { ResponseState } from "_/types";
 import { useCallback, useReducer, useRef } from "react";
 import { FormGroup, FormLabel, FormControl, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { StyledForm, StyledSumbit, StyledRow } from "./styles";
 
@@ -55,11 +59,44 @@ function RegisterComponent(): React.ReactElement {
 
   const formRef = useRef<HTMLFormElement>(null);
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
-    (event: React.FormEvent) => {
+    async (event: React.FormEvent) => {
       event.preventDefault();
+
+      const date = new Date();
+      const formatedDate =
+        date.getUTCFullYear().toString() +
+        "-" +
+        (date.getUTCMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        date.getUTCDate().toString().padStart(2, "0");
+
       if (state.password === state.confirmPassword) {
-        console.log("Register was successfully!");
+        const response = await addUser({
+          firstName: state.firstname,
+          lastName: state.lastname,
+          id: state.id,
+          avatar: DefaultAvatar,
+          posts: 0,
+          joinDate: formatedDate,
+          password: state.password,
+        });
+
+        switch (response) {
+          case ResponseState.SUCCESS:
+            toast.success("Your account created successfully!");
+            history.replace("/login");
+            break;
+          case ResponseState.BAD:
+            toast.warn("This username already exist!");
+            break;
+          default:
+            toast.error("Some error occurs!");
+        }
+      } else {
+        toast.warn("Passwords are not matched!");
       }
     },
     [state]

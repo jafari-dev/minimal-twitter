@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { UserType } from "../types";
+import { UserType, ResponseState } from "../types";
 import Axios from "./config";
 
 export async function getUsersByPage(pageNumbere: number): Promise<UserType[]> {
@@ -26,5 +26,21 @@ export async function getNumberOfUsers(): Promise<number> {
     console.log(error);
 
     return 0;
+  }
+}
+
+export async function addUser(
+  userInfo: UserType & { password: string }
+): Promise<string> {
+  try {
+    await Axios.post("/users", userInfo);
+
+    return ResponseState.SUCCESS;
+  } catch (error) {
+    if ((error as Error).message === "Request failed with status code 500") {
+      return ResponseState.BAD;
+    } else {
+      return ResponseState.FAIL;
+    }
   }
 }

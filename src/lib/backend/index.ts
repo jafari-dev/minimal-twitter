@@ -1,2 +1,2 @@
 export { getPostsByPage, getNumberOfPosts } from "./posts";
-export { getUsersByPage, getNumberOfUsers } from "./users";
+export { getUsersByPage, getNumberOfUsers, addUser } from "./users";

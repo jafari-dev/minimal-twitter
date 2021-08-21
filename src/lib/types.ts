@@ -17,3 +17,9 @@ export interface UserType {
   posts: number;
   avatar: string;
 }
+
+export enum ResponseState {
+  SUCCESS = "Successfully",
+  FAIL = "Fail",
+  BAD = "Bad",
+}

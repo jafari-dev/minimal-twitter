@@ -1,6 +1,10 @@
+const { ESLINT_MODES } = require("@craco/craco");
 const CracoAlias = require("craco-alias");
 
 module.exports = {
+  eslint: {
+    mode: ESLINT_MODES.file,
+  },
   plugins: [
     {
       plugin: CracoAlias,
@@ -8,7 +12,7 @@ module.exports = {
         source: "options",
         baseUrl: "./",
         aliases: {
-          "_": "./src/lib",
+          _: "./src/lib",
           "_/*": "./src/lib/*",
           "@": "./src/assets",
           "@/*": "./src/assets/*",

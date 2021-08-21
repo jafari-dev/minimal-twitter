@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import "@/css/bootstrap.min.css";
 import "@/css/font-face.css";
+import "@/css/react-toastify.min.css";
 
 export const globalStyles = css`
   html {

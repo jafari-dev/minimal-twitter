@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { Switch, Route, useHistory, withRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import {
   Header,
@@ -52,6 +53,7 @@ function App() {
         <Route component={NotFound} />
       </Switch>
       <Footer />
+      <ToastContainer position="bottom-left" />
     </Container>
   );
 }

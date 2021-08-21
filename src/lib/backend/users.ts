@@ -44,3 +44,29 @@ export async function addUser(
     }
   }
 }
+
+export async function authenticateUser(
+  username: string,
+  password: string
+): Promise<string> {
+  try {
+    const response: AxiosResponse<UserType[]> = await Axios.get(
+      `/users?id=${username}&password=${password}`
+    );
+
+    if (response.data.length === 1) {
+      const { firstName, lastName } = response.data[0];
+      localStorage.setItem("__USERNAME", username);
+      localStorage.setItem("__PASSWORD", password);
+      localStorage.setItem("__FULLNAME", firstName + " " + lastName);
+
+      return ResponseState.SUCCESS;
+    } else if (response.data.length === 0) {
+      return ResponseState.BAD;
+    } else {
+      return ResponseState.FAIL;
+    }
+  } catch (error) {
+    return ResponseState.FAIL;
+  }
+}

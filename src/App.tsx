@@ -1,3 +1,5 @@
+import { authenticateUser } from "_/backend";
+import { ResponseState } from "_/types";
 import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { Switch, Route, useHistory, withRouter } from "react-router-dom";
@@ -15,8 +17,6 @@ import {
 } from "./layouts";
 
 const localUser = localStorage.getItem("currentUser");
-
-localStorage.setItem("currentUser", "Ahmad");
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localUser));
@@ -36,6 +36,17 @@ function App() {
       }
     }
   }, [history, isLoggedIn]);
+
+  useEffect(() => {
+    (async function () {
+      const localUsername = localStorage.getItem("__USERNAME") ?? "__";
+      const localPassword = localStorage.getItem("__PASSWORD") ?? "__";
+      const response = await authenticateUser(localUsername, localPassword);
+      response === ResponseState.SUCCESS
+        ? setIsLoggedIn(true)
+        : setIsLoggedIn(false);
+    })();
+  }, [localStorage.getItem("__USERNAME"), localStorage.getItem("__PASSWORD")]);
 
   return (
     <Container>

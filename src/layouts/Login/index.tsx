@@ -1,6 +1,9 @@
+import { authenticateUser } from "_/backend";
+import { ResponseState } from "_/types";
 import { useCallback, useReducer, useRef } from "react";
 import { FormGroup, FormLabel, FormControl, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { StyledForm, StyledSumbit, StyledRow } from "./styles";
 
@@ -36,10 +39,28 @@ function LoginComponent(): React.ReactElement {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleLogin = useCallback((event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Login was successfully!");
-  }, []);
+  const history = useHistory();
+
+  const handleLogin = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
+
+      const response = await authenticateUser(state.id, state.password);
+
+      switch (response) {
+        case ResponseState.SUCCESS:
+          toast.success("You logged in successfully!");
+          history.replace("/");
+          break;
+        case ResponseState.BAD:
+          toast.warn("Your username or password is wrong!");
+          break;
+        default:
+          toast.error("Some error occurs!");
+      }
+    },
+    [state]
+  );
 
   const handleFieldChange = useCallback((event: Change) => {
     const payload = event.target.value;

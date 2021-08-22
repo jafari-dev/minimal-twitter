@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 
-import { PostType } from "../types";
+import { updateUserPosts } from ".";
+import { PostType, ResponseState } from "../types";
 import Axios from "./config";
 
 export async function getPostsByPage(pageNumbere: number): Promise<PostType[]> {
@@ -26,5 +27,19 @@ export async function getNumberOfPosts(): Promise<number> {
     console.log(error);
 
     return 0;
+  }
+}
+
+export async function addPost(postData: PostType): Promise<string> {
+  try {
+    await Axios.post("posts", postData);
+    const updateResponse = await updateUserPosts(postData.ownerId, 1);
+    if (updateResponse === ResponseState.SUCCESS) {
+      return ResponseState.SUCCESS;
+    } else {
+      return ResponseState.FAIL;
+    }
+  } catch (error) {
+    return ResponseState.FAIL;
   }
 }

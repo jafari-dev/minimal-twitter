@@ -1,7 +1,10 @@
 import { DefaultAvatar } from "@/images";
-import { PostType } from "_/types";
+import { addPost } from "_/backend";
+import { PostType, ResponseState } from "_/types";
 import { useRef, useCallback } from "react";
 import { Button, FormControl } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { v4 as uuid4 } from "uuid";
 
 import { StyledSendTweet } from "./styles";
 
@@ -13,28 +16,52 @@ function SendPostComponent({ onSendNewPost }: Props): React.ReactElement {
   const urlInputRef = useRef<HTMLInputElement>(null);
   const textInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const sendTweet = useCallback(() => {
+  const sendTweet = useCallback(async () => {
     const text = textInputRef.current?.value?.trim() || "";
     const attachment = urlInputRef.current?.value?.trim() || "";
 
-    if (text !== "") {
+    if (
+      text !== "" &&
+      localStorage.getItem("__USERNAME") &&
+      localStorage.getItem("__FULLNAME")
+    ) {
       const newPost: PostType = {
         text: text,
         ownerAvatar: DefaultAvatar,
         date: new Date().toDateString(),
-        id: `${Math.floor(Math.random() * 100000)}`,
+        id: uuid4(),
         likes: 0,
-        ownerId: "al_pacino",
-        ownerFullname: "Al Pacino",
+        ownerId: localStorage.getItem("__USERNAME") ?? "",
+        ownerFullname: localStorage.getItem("__FULLNAME") ?? "",
         imageAttachment: attachment,
       };
 
-      onSendNewPost(newPost);
+      try {
+        const response = await addPost(newPost);
+        switch (response) {
+          case ResponseState.SUCCESS:
+            onSendNewPost(newPost);
+            toast.success("Your post sent successfully!");
+            break;
+          case ResponseState.FAIL:
+            toast.error("Your post didn't send!");
+            break;
+          default:
+            toast.error("Some errors occurs!");
+        }
+        onSendNewPost(newPost);
+      } catch (error) {
+        toast.error("Some errors occurs!");
+      }
 
       (textInputRef.current as HTMLTextAreaElement).value = "";
       (urlInputRef.current as HTMLInputElement).value = "";
     }
-  }, [onSendNewPost]);
+  }, [
+    onSendNewPost,
+    localStorage.getItem("__USERNAME"),
+    localStorage.getItem("__FULLNAME"),
+  ]);
 
   return (
     <StyledSendTweet>

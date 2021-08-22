@@ -70,3 +70,38 @@ export async function authenticateUser(
     return ResponseState.FAIL;
   }
 }
+
+export async function getUserById(userId: string): Promise<UserType> {
+  try {
+    const response: AxiosResponse<UserType> = await Axios.get(
+      `users/${userId}`
+    );
+
+    return response.data;
+  } catch (error) {
+    return {
+      avatar: "",
+      firstName: "",
+      id: "",
+      joinDate: "",
+      lastName: "",
+      posts: 0,
+    };
+  }
+}
+
+export async function updateUserPosts(
+  userId: string,
+  counter: number
+): Promise<string> {
+  try {
+    const { posts, ...otherData }: UserType = await getUserById(userId);
+    const updatedData: UserType = { ...otherData, posts: posts + counter };
+
+    await Axios.put(`users/${userId}`, updatedData);
+
+    return ResponseState.SUCCESS;
+  } catch (error) {
+    return ResponseState.FAIL;
+  }
+}
